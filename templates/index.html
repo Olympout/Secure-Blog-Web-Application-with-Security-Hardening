@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Αρχική - Blog{% endblock %}
+
+{% block content %}
+<h1>📝 Όλα τα Posts</h1>
+
+{% if posts %}
+    {% for post in posts %}
+    <div class="post-card">
+        <h2>{{ post['title'] }}</h2>
+        <p>{{ post['content'][:200] }}{% if post['content']|length > 200 %}...{% endif %}</p>
+        <div class="post-meta">
+            <strong>Συγγραφέας:</strong> {{ post['author'] }} | 
+            <strong>Ημερομηνία:</strong> {{ post['created_at'] }}
+        </div>
+        <div style="margin-top: 15px;">
+            <a href="{{ url_for('view_post', post_id=post['id']) }}" class="btn">Διάβασε περισσότερα</a>
+            {% if session.user_id == post['user_id'] or session.role == 'admin' %}
+                <form action="{{ url_for('delete_post', post_id=post['id']) }}" method="POST" style="display: inline;">
+                     <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις αυτό το post;')">Διαγραφή</button>
+                </form>
+                {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p style="margin-top: 20px; color: #666;">Δεν υπάρχουν posts ακόμα. 
+    {% if session.username %}
+        <a href="{{ url_for('new_post') }}">Δημιούργησε το πρώτο σου post!</a>
+    {% else %}
+        <a href="{{ url_for('login') }}">Συνδέσου</a> για να δημιουργήσεις το πρώτο post!
+    {% endif %}
+    </p>
+{% endif %}
+
+{% endblock %}

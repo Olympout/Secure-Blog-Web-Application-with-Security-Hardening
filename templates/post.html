@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post['title'] }} - Blog{% endblock %}
+
+{% block content %}
+<h1>{{ post['title'] }}</h1>
+
+<div class="post-meta">
+    <strong>Συγγραφέας:</strong> {{ post['author'] }} | 
+    <strong>Ημερομηνία:</strong> {{ post['created_at'] }}
+</div>
+
+<div style="margin-top: 30px; line-height: 1.8;">
+    {{ post['content'] }}
+</div>
+
+<div style="margin-top: 30px;">
+    <a href="{{ url_for('index') }}" class="back-link">← Επιστροφή στην αρχική</a>
+    
+    {% if session.user_id == post['user_id'] or session.role == 'admin' %}
+<form action="{{ url_for('delete_post', post_id=post['id']) }}" method="POST" style="display: inline; margin-left: 20px;">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <button type="submit" class="btn btn-danger" onclick="return confirm('Είσαι σίγουρος ότι θέλεις να διαγράψεις αυτό το post;')">Διαγραφή</button>
+</form>
+{% endif %}
+</div>
+
+{% endblock %}

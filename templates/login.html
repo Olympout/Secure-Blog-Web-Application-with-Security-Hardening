@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Σύνδεση - Blog{% endblock %}
+
+{% block content %}
+<h1>🔐 Σύνδεση</h1>
+
+<form method="POST" action="{{ url_for('login') }}">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required autofocus>
+    </div>
+    
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+    </div>
+    
+    <button type="submit" class="btn">Σύνδεση</button>
+    <a href="{{ url_for('index') }}" class="btn" style="background: #6c757d;">Ακύρωση</a>
+</form>
+
+<p style="margin-top: 20px; color: #666;">
+    Δεν έχεις λογαριασμό; <a href="{{ url_for('register') }}">Κάνε εγγραφή εδώ</a>
+</p>
+
+{% endblock %}
