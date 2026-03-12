@@ -1,70 +1,97 @@
-# Απλό Blog με Flask + SQLite
+# Secure Blog Web Application (Flask)
 
-## Περιγραφή
-Ένα απλό blog application με Flask και SQLite database. Αυτή είναι η **βασική έκδοση χωρίς security features**.
+## Description
+This project is a secure blog web application developed using Python Flask and SQLite.  
+It demonstrates the implementation of secure web development practices and protection against common web application vulnerabilities following OWASP guidelines.
 
-## Λειτουργίες
-- ✅ Προβολή όλων των posts (αρχική σελίδα)
-- ✅ Δημιουργία νέου post
-- ✅ Προβολή πλήρους post
-- ✅ Διαγραφή post
-- ✅ SQLite database
+The application allows users to register, authenticate, create posts, and manage content through a role-based access control system.
 
-## Δομή Project
+---
 
-```
-blog/
-├── app.py                  # Main Flask application
-├── requirements.txt        # Python dependencies
-├── blog.db                 # SQLite database (δημιουργείται αυτόματα)
-└── templates/
-    ├── base.html          # Base template
-    ├── index.html         # Homepage με λίστα posts
-    ├── new_post.html      # Φόρμα νέου post
-    └── post.html          # Προβολή πλήρους post
-```
+## Features
 
-## Εγκατάσταση
+### Application Features
+- User registration and login
+- Secure password hashing (PBKDF2-SHA256)
+- Role-Based Access Control (Admin / User)
+- Create and view blog posts
+- Delete posts (owner or admin only)
+- Session-based authentication
 
-1. Εγκατάσταση dependencies:
+### Security Features
+- HTTPS support
+- Secure session cookies
+- CSRF protection (Flask-WTF)
+- Input validation and sanitization
+- SQL injection protection using parameterized queries
+- XSS protection using Jinja2 auto-escaping
+- Security headers (CSP, HSTS, X-Frame-Options, etc.)
+- Session timeout and secure cookie configuration
+
+---
+
+## Security Testing
+
+Security testing was performed using **OWASP ZAP**.
+
+Process:
+1. Initial vulnerability scan to identify security issues
+2. Implementation of security controls
+3. Second scan to verify mitigation of vulnerabilities
+
+The implemented measures significantly reduced the risk of common web attacks such as SQL Injection, Cross-Site Scripting (XSS), CSRF, and Man-in-the-Middle attacks.
+
+---
+
+## Technologies Used
+
+- Python
+- Flask
+- SQLite
+- HTML / CSS
+- Jinja2 Templates
+- Flask-WTF
+- OWASP ZAP
+
+---
+
+## Project Structure
+
+
+secure-blog
+│
+├── app.py
+├── requirements.txt
+├── templates/
+│ ├── base.html
+│ ├── index.html
+│ ├── login.html
+│ ├── register.html
+│ ├── new_post.html
+│ └── post.html
+
+
+---
+
+## Installation
+
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
-```
 
-2. Εκτέλεση εφαρμογής:
-```bash
+Run the application:
+
 python app.py
-```
 
-3. Άνοιξε το browser στο: `http://localhost:5000`
+Open the browser at:
 
-## Database Schema
+http://localhost:5000
+Educational Context
 
-**Table: posts**
-- id (INTEGER PRIMARY KEY)
-- title (TEXT)
-- content (TEXT)
-- author (TEXT)
-- created_at (TIMESTAMP)
+This project was developed as part of the Information Systems Security course at the University of Piraeus.
+The goal of the project was to implement a web application and progressively apply security mechanisms and vulnerability assessment techniques.
 
-## Επόμενα Βήματα (Security Features)
+Disclaimer
 
-Αυτή η έκδοση είναι η **βασική χωρίς security**. Θα προσθέσουμε στη συνέχεια:
-
-1. ✋ Μελέτη ασφάλειας (Risk Analysis + Security Policy)
-2. 🔒 SSL/HTTPS με πιστοποιητικό
-3. 🔑 Authentication & Authorization
-4. 🛡️ Input validation & filtering (SQL injection, XSS protection)
-5. 🔍 Vulnerability scanning (ZAP/OpenVAS)
-6. 📋 Τελική μελέτη ασφάλειας
-
-## Σημειώσεις
-
-⚠️ **ΠΡΟΣΟΧΗ**: Αυτή η έκδοση δεν είναι ασφαλής και χρησιμοποιείται μόνο ως αρχική βάση.
-
-- Δεν υπάρχει authentication (οποιοσδήποτε μπορεί να δημιουργήσει/διαγράψει posts)
-- Δεν υπάρχει input validation (ευάλωτο σε SQL injection, XSS)
-- Τρέχει σε HTTP χωρίς encryption
-- Debug mode enabled
-
-Όλα αυτά θα διορθωθούν στα επόμενα βήματα!
+This project is intended for educational purposes and security experimentation.
